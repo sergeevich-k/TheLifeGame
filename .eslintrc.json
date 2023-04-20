@@ -1,0 +1,51 @@
+{
+  "parser": "@babel/eslint-parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "plugins": [
+    "react",
+    "spellcheck"
+  ],
+  "globals": {
+    "localStorage": true,
+    "console": true,
+    "alert": true,
+    "window": true,
+    "document": true,
+    "__dirname": true
+  },
+  "env": {
+    "commonjs": true,
+    "node": true
+  },
+  "rules": {
+    "no-console": "off",
+    "no-case-declarations": "off",
+    "react/no-unescaped-entities": "off",
+    "react/no-deprecated": "off",
+    "react/prop-types": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": [
+          "css"
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
