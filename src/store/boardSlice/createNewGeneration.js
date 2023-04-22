@@ -1,56 +1,58 @@
 import { setNewBoard } from './boardSlice'
+import { HORIZONTAL_CELLS_COUNT, VERTICAL_CELLS_COUNT } from '../../constants'
+
+export const getRowAboveIndex = (rowI) => {
+    let rowAboveI = rowI - 1
+    if (rowAboveI < 0) rowAboveI = HORIZONTAL_CELLS_COUNT - 1
+    return rowAboveI
+}
+export const getRowBelowIndex = (rowI) => {
+    let rowBelowI = rowI + 1
+    if (rowBelowI > HORIZONTAL_CELLS_COUNT - 1) rowBelowI = 0
+    return rowBelowI
+}
+export const getNextColumnIndex = (columnI) => {
+    let nextColumnI = columnI + 1
+    if (nextColumnI > VERTICAL_CELLS_COUNT - 1) nextColumnI = 0
+    return nextColumnI
+}
+export const getPreviousColumnIndex = (columnI) => {
+    let previousColumnI = columnI - 1
+    if (previousColumnI < 0) previousColumnI = VERTICAL_CELLS_COUNT - 1
+    return previousColumnI
+}
 
 const isCellAboveAlive = (rowI, columnI, board) => {
-    const neighboringRowI = rowI - 1
-    if (neighboringRowI < 0) return false
-    return board[neighboringRowI][columnI].isAlive
+    return board[getRowAboveIndex(rowI)][columnI].isAlive
 }
+
 const isCellBelowAlive = (rowI, columnI, board) => {
-    const neighboringRowI = rowI + 1
-    if (neighboringRowI > board.length - 1) return false
-    return board[neighboringRowI][columnI].isAlive
+    return board[getRowBelowIndex(rowI)][columnI].isAlive
 }
+
 const isCellToTheLeftAlive = (rowI, columnI, board) => {
-    const neighboringColumnI = columnI - 1
-    if (neighboringColumnI < 0) return false
-    return board[rowI][neighboringColumnI].isAlive
+    return board[rowI][getPreviousColumnIndex(columnI)].isAlive
 }
+
 const isCellToTheRightAlive = (rowI, columnI, board) => {
-    const neighboringColumnI = columnI + 1
-    if (neighboringColumnI > board[0].length - 1) return false
-    return board[rowI][neighboringColumnI].isAlive
+    return board[rowI][getNextColumnIndex(columnI)].isAlive
 }
+
 const isCellToTheTopLeftAlive = (rowI, columnI, board) => {
-    const neighboringColumnI = columnI - 1
-    const neighboringRowI = rowI - 1
-
-    if (neighboringColumnI < 0) return false
-    if (neighboringRowI < 0) return false
-    return board[neighboringRowI][neighboringColumnI].isAlive
+    return board[getRowAboveIndex(rowI)][getPreviousColumnIndex(columnI)]
+        .isAlive
 }
-const isCellToTheBottomLeftAlive = (rowI, columnI, board) => {
-    const neighboringColumnI = columnI - 1
-    const neighboringRowI = rowI + 1
 
-    if (neighboringColumnI < 0) return false
-    if (neighboringRowI > board.length - 1) return false
-    return board[neighboringRowI][neighboringColumnI].isAlive
+const isCellToTheBottomLeftAlive = (rowI, columnI, board) => {
+    return board[getRowBelowIndex(rowI)][getPreviousColumnIndex(columnI)]
+        .isAlive
 }
 const isCellToTheTopRightAlive = (rowI, columnI, board) => {
-    const neighboringColumnI = columnI + 1
-    const neighboringRowI = rowI - 1
-
-    if (neighboringColumnI > board[0].length - 1) return false
-    if (neighboringRowI < 0) return false
-    return board[neighboringRowI][neighboringColumnI].isAlive
+    return board[getRowAboveIndex(rowI)][getNextColumnIndex(columnI)].isAlive
 }
-const isCellToTheBottomRightAlive = (rowI, columnI, board) => {
-    const neighboringColumnI = columnI + 1
-    const neighboringRowI = rowI + 1
 
-    if (neighboringColumnI > board[0].length - 1) return false
-    if (neighboringRowI > board.length - 1) return false
-    return board[neighboringRowI][neighboringColumnI].isAlive
+const isCellToTheBottomRightAlive = (rowI, columnI, board) => {
+    return board[getRowBelowIndex(rowI)][getNextColumnIndex(columnI)].isAlive
 }
 
 export const countNumberOfAliveNeighbors = (rowI, columnI, board) => {

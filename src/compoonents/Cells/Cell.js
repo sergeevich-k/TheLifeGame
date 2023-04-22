@@ -8,9 +8,12 @@ import { isWithinRange } from '../../store/boardSlice/createNewGeneration'
 import { selectorOfSurvivingConditions } from '../../store/ConditionsSlice/survivingConditionsSlice'
 import { selectorOfCreationConditions } from '../../store/ConditionsSlice/creationConditionsSlice'
 import { WILL_APPEAR, WILL_DIE, WILL_REMAIN_THE_SAME } from './style'
-
-const aliveCellsBackground = '#75a6f6'
-const deadCellsBackground = '#1b4d72'
+import {
+    aliveCellsColor,
+    appearingCellsColor,
+    deadCellsColor,
+    dyingCellsColor
+} from '../TheLifeGame/style'
 
 const CellContainer = styled.div.attrs(({ top, left }) => ({
     style: {
@@ -21,7 +24,7 @@ const CellContainer = styled.div.attrs(({ top, left }) => ({
     position: absolute;
     width: ${CELLS_WIDTH_PX}px;
     height: ${CELLS_HEIGHT_PX}px;
-    /*border: 2px solid darkcyan;*/
+    border: 1px solid darkcyan;
 
     box-sizing: border-box;
 
@@ -35,18 +38,18 @@ const CellContainer = styled.div.attrs(({ top, left }) => ({
         switch (nextLifeStatus) {
             case WILL_DIE:
                 return css`
-                    background: red;
+                    background: ${dyingCellsColor};
                     color: white;
                 `
             case WILL_APPEAR:
                 return css`
-                    background: #3de73d;
+                    background: ${appearingCellsColor};
                     color: black;
                 `
             default:
                 return css`
                     background: ${({ isAlive }) =>
-                        isAlive ? aliveCellsBackground : deadCellsBackground};
+                        isAlive ? aliveCellsColor : deadCellsColor};
                 `
         }
     }}
@@ -95,13 +98,13 @@ function CellView({
     )
 
     const handleMouseDown = () => {
-        dispatch((isAlive ? killCell : createCell)({ rowI, columnI }))
+        dispatch((isAlive ? killCell : createCell)([rowI, columnI]))
     }
 
     const handleMouseOver = () => {
         !isAlive &&
             isMouseDownRef.current &&
-            dispatch(createCell({ rowI, columnI }))
+            dispatch(createCell([rowI, columnI]))
     }
 
     return (

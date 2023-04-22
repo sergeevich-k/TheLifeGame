@@ -8,10 +8,13 @@ import { clearBoard } from '../../store/boardSlice/boardSlice'
 const useKeyboardBinding = () => {
     const dispatch = useDispatch()
     const onVKeyDown = (event) => {
-        if ('v' === event.key.toLowerCase()) dispatch(createNewGeneration())
+        const pressedKey = event.key.toLowerCase()
+        if (pressedKey === 'n' || pressedKey === 'т')
+            dispatch(createNewGeneration())
     }
     const onCKeyDown = (event) => {
-        if ('c' === event.key.toLowerCase()) dispatch(clearBoard())
+        const pressedKey = event.key.toLowerCase()
+        if (pressedKey === 'с' || pressedKey === 'c') dispatch(clearBoard())
     }
 
     useEffect(() => {
@@ -30,7 +33,7 @@ export function TheLifeGame() {
     const [shouldShowPrediction, setShouldShowPrediction] = useState(false)
     const [
         shouldShowNumberOfAliveNeighbors,
-        setShouldShowNumberOfAliveNeighbors,
+        setShouldShowNumberOfAliveNeighbors
     ] = useState(false)
 
     const toggleShouldShowPrediction = () => {
@@ -44,7 +47,7 @@ export function TheLifeGame() {
         <div
             css={`
                  {
-                    background: #134c89;
+                    background: #17487c;
                     border-radius: 3px;
                     border: 2px solid palevioletred;
                     color: rgb(227, 165, 165);

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { HORIZONTAL_CELLS_COUNT, VERTICAL_CELLS_COUNT } from '../../constants'
 import changeNumberOfAliveNeighborsInSurroundingCells, {
     decrement,
-    increment,
+    increment
 } from './changeNumberOfAliveNeighbors'
 
 const initialState = []
@@ -18,7 +18,7 @@ export const boardSlice = createSlice({
     name: 'board',
     initialState,
     reducers: {
-        createCell(board, { payload: { rowI, columnI } }) {
+        createCell(board, { payload: [rowI, columnI] }) {
             board[rowI][columnI].isAlive = true
 
             changeNumberOfAliveNeighborsInSurroundingCells(
@@ -28,7 +28,7 @@ export const boardSlice = createSlice({
                 increment
             )
         },
-        killCell(board, { payload: { rowI, columnI } }) {
+        killCell(board, { payload: [rowI, columnI] }) {
             board[rowI][columnI].isAlive = false
 
             changeNumberOfAliveNeighborsInSurroundingCells(
@@ -43,8 +43,8 @@ export const boardSlice = createSlice({
         },
         setNewBoard(state, { payload }) {
             return payload
-        },
-    },
+        }
+    }
 })
 
 export const { createCell, clearBoard, setNewBoard, killCell } =

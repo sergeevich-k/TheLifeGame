@@ -7,5 +7,5 @@ export default combineReducers({
     [survivingConditionsSlice.name]: survivingConditionsSlice.reducer,
     [creationConditionsSlice.name]: creationConditionsSlice.reducer,
     [shouldShowNumberOfAliveNeighborsSlice.name]:
-        shouldShowNumberOfAliveNeighborsSlice.reducer,
+        shouldShowNumberOfAliveNeighborsSlice.reducer
 })

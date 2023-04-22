@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = [3, 5]
+const initialState = [2, 3]
 
 export const survivingConditionsSlice = createSlice({
     name: 'survivingConditions',
@@ -8,8 +8,8 @@ export const survivingConditionsSlice = createSlice({
     reducers: {
         setCellsSurvivingConditions(state, { payload }) {
             return payload
-        },
-    },
+        }
+    }
 })
 
 export const { setCellsSurvivingConditions } = survivingConditionsSlice.actions

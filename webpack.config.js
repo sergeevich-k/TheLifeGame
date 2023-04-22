@@ -7,26 +7,32 @@ module.exports = {
 
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'dist'),
+        /*path: path.resolve(__dirname, 'dist')*/
+        path: path.resolve(__dirname, 'public')
     },
     module: {
         rules: [
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                use: ['style-loader', 'css-loader']
             },
             {
                 exclude: /(node_modules)/,
                 test: /\.jsx?$/,
-                use: 'babel-loader',
-            },
-        ],
+                use: 'babel-loader'
+            }
+        ]
     },
 
     devtool: 'inline-source-map',
 
     devServer: {
         static: './public',
-        hot: true,
+        hot: true
     },
+    resolve: {
+        alias: {
+            '@mui/styled-engine': '@mui/styled-engine-sc'
+        }
+    }
 }

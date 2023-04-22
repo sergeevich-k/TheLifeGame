@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { HORIZONTAL_CELLS_COUNT, VERTICAL_CELLS_COUNT } from '../../constants'
 
-const initialState = [3, 5]
+const initialState = [3, 3]
 
 export const creationConditionsSlice = createSlice({
     name: 'creationConditions',
@@ -9,8 +9,8 @@ export const creationConditionsSlice = createSlice({
     reducers: {
         setCellsCreationConditions(state, { payload }) {
             return payload
-        },
-    },
+        }
+    }
 })
 
 export const { setCellsCreationConditions } = creationConditionsSlice.actions

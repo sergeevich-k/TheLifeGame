@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux'
 import { SliderOfCondition } from '../Sliders/'
 import {
     selectorOfSurvivingConditions,
-    setCellsSurvivingConditions,
+    setCellsSurvivingConditions
 } from '../../store/ConditionsSlice/survivingConditionsSlice'
 import {
     selectorOfCreationConditions,
-    setCellsCreationConditions,
+    setCellsCreationConditions
 } from '../../store/ConditionsSlice/creationConditionsSlice'
 
 import { createNewGeneration } from '../../store/boardSlice/createNewGeneration'
@@ -21,7 +21,7 @@ export function ControlPanel({
     toggleShouldShowPrediction,
     shouldShowPrediction,
     toggleShouldShowNumberOfAliveNeighbors,
-    shouldShowNumberOfAliveNeighbors,
+    shouldShowNumberOfAliveNeighbors
 }) {
     const dispatch = useDispatch()
 
@@ -32,10 +32,8 @@ export function ControlPanel({
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
-
-                    background: #134c89;
                     border-radius: 3px;
-                    border: 2px solid palevioletred;
+                    border: inherit;
                     margin: 1em;
                     padding: 0.25em 1em;
                     flex-grow: 1;

@@ -29,9 +29,9 @@ export function Board({
             css={`
                  {
                     position: relative;
-                    background: #134c89;
                     border-radius: 3px;
-                    border: 2px solid palevioletred;
+                    border: inherit;
+
                     margin: 1em;
                     width: ${HORIZONTAL_CELLS_COUNT * CELLS_WIDTH_PX}px;
                     height: ${VERTICAL_CELLS_COUNT * CELLS_HEIGHT_PX}px;

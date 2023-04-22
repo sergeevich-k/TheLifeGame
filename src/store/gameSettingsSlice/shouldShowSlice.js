@@ -11,8 +11,8 @@ export const shouldShowNumberOfAliveNeighborsSlice = createSlice({
             shouldShowNumberOfAliveNeighbors
         ) {
             return !shouldShowNumberOfAliveNeighbors
-        },
-    },
+        }
+    }
 })
 
 export const { toggleShouldShowNumberOfAliveNeighbors } =

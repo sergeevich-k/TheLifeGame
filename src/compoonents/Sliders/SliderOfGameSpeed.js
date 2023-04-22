@@ -1,7 +1,5 @@
-import {useDispatch, useSelector} from "react-redux";
-import {Slider} from "@mui/material";
-import {useState} from "react";
-
+import { Slider } from '@mui/material'
+import { useState } from 'react'
 
 export function SliderOfGameSpeed({ handleSpeedChange }) {
     const [speed, setSpeed] = useState(1)
@@ -20,7 +18,7 @@ export function SliderOfGameSpeed({ handleSpeedChange }) {
             onChange={handleChange}
             valueLabelDisplay="auto"
             min={0.5}
-            max={4}
+            max={6}
             step={0.5}
             marks={true}
             track={false}

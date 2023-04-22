@@ -3,16 +3,18 @@ import { Slider } from '@mui/material'
 
 import styled, { css } from 'styled-components'
 import { EMPHASIZE_ALL_OUTSIDE, EMPHASIZE_CHOSEN_RANGE } from './style'
+import {
+    aliveCellsColor,
+    appearingCellsColor,
+    deadCellsColor,
+    dyingCellsColor
+} from '../TheLifeGame/style'
 
 const marks = []
 
 for (let i = 0; i <= 8; i++) {
     marks.push({ value: i, label: `${i}` })
 }
-
-const aliveCellsBackground = '#75a6f6'
-const deadCellsBackground = '#1b4d72'
-const appearingCellsBackground = '#3de73d'
 
 const EmphasizingSlider = styled(Slider)`
     ${({ $emphasizedPart, $shouldShowPrediction }) => {
@@ -21,33 +23,33 @@ const EmphasizingSlider = styled(Slider)`
             case EMPHASIZE_ALL_OUTSIDE:
                 return css`
                     & .MuiSlider-rail {
-                        background-color: red;
+                        background-color: ${dyingCellsColor};
                         height: 5px;
                         opacity: 0.75;
                     }
 
                     & .MuiSlider-track {
-                        background-color: ${aliveCellsBackground};
+                        background-color: ${aliveCellsColor};
                         height: 5px;
                     }
 
                     & .MuiSlider-thumb {
-                        background-color: ${aliveCellsBackground};
+                        background-color: ${aliveCellsColor};
                     }
                 `
             case EMPHASIZE_CHOSEN_RANGE:
                 return css`
                     & .MuiSlider-track {
-                        background-color: ${appearingCellsBackground};
+                        background-color: ${appearingCellsColor};
                         height: 5px;
                     }
 
                     & .MuiSlider-thumb {
-                        background-color: ${appearingCellsBackground};
+                        background-color: ${appearingCellsColor};
                     }
 
                     & .MuiSlider-rail {
-                        background-color: ${deadCellsBackground};
+                        background-color: ${deadCellsColor};
                         height: 5px;
                         opacity: 0.75;
                     }
@@ -61,7 +63,7 @@ export function SliderOfCondition({
     actionOnChange,
     label,
     emphasizedPart,
-    shouldShowPrediction,
+    shouldShowPrediction
 }) {
     const dispatch = useDispatch()
 
@@ -91,7 +93,6 @@ export function SliderOfCondition({
                 marks={marks}
                 min={0}
                 max={8}
-                disableSwap
                 $emphasizedPart={emphasizedPart}
                 $shouldShowPrediction={shouldShowPrediction}
             />
