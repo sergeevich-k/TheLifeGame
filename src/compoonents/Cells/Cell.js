@@ -1,19 +1,22 @@
 import { CELLS_HEIGHT_PX, CELLS_WIDTH_PX } from '../../constants'
 import styled, { css } from 'styled-components'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { createCell, killCell } from '../../store/boardSlice/boardSlice'
+import { reviveCell, killCell } from '../../store/boardSlice/boardSlice'
 import { isWithinRange } from '../../store/boardSlice/createNewGeneration'
-import { selectorOfSurvivingConditions } from '../../store/ConditionsSlice/survivingConditionsSlice'
-import { selectorOfCreationConditions } from '../../store/ConditionsSlice/creationConditionsSlice'
-import { WILL_APPEAR, WILL_DIE, WILL_REMAIN_THE_SAME } from './style'
+import { selectorOfSurvivalConditions } from '../../store/ConditionsSlice/survivalConditionsSlice'
+import { selectorOfRevivalConditions } from '../../store/ConditionsSlice/revivalConditionsSlice'
+import { WILL_REVIVE, WILL_DIE } from './style'
 import {
     aliveCellsColor,
-    appearingCellsColor,
+    revivingCellsColor,
     deadCellsColor,
     dyingCellsColor
 } from '../TheLifeGame/style'
+
+const CELL_BORDER_WIDTH_PX = 1
 
 const CellContainer = styled.div.attrs(({ top, left }) => ({
     style: {
@@ -24,15 +27,11 @@ const CellContainer = styled.div.attrs(({ top, left }) => ({
     position: absolute;
     width: ${CELLS_WIDTH_PX}px;
     height: ${CELLS_HEIGHT_PX}px;
-    border: 1px solid darkcyan;
-
+    border: ${CELL_BORDER_WIDTH_PX}px solid darkcyan;
     box-sizing: border-box;
+    text-align: center;
 
-    ${({ isAlive }) =>
-        isAlive &&
-        css`
-            color: black;
-        `}
+    font-size: ${CELLS_HEIGHT_PX - 2 * CELL_BORDER_WIDTH_PX}px;
 
     ${({ nextLifeStatus }) => {
         switch (nextLifeStatus) {
@@ -41,15 +40,16 @@ const CellContainer = styled.div.attrs(({ top, left }) => ({
                     background: ${dyingCellsColor};
                     color: white;
                 `
-            case WILL_APPEAR:
+            case WILL_REVIVE:
                 return css`
-                    background: ${appearingCellsColor};
+                    background: ${revivingCellsColor};
                     color: black;
                 `
             default:
                 return css`
                     background: ${({ isAlive }) =>
                         isAlive ? aliveCellsColor : deadCellsColor};
+                    color: ${({ isAlive }) => isAlive && 'black'};
                 `
         }
     }}
@@ -58,26 +58,25 @@ const CellContainer = styled.div.attrs(({ top, left }) => ({
 const computeNextLifeStatus = (
     isAlive,
     numberOfAliveNeighbors,
-    [minForSurviving, MaxForSurviving],
-    [minForCreation, MaxForCreation]
+    [minForSurvival, MaxForSurviving],
+    [minForRevival, MaxForCreation]
 ) => {
-    if (numberOfAliveNeighbors === '') return WILL_REMAIN_THE_SAME
     if (isAlive) {
-        return isWithinRange(
-            numberOfAliveNeighbors,
-            minForSurviving,
-            MaxForSurviving
+        return (
+            !isWithinRange(
+                numberOfAliveNeighbors,
+                minForSurvival,
+                MaxForSurviving
+            ) && WILL_DIE
         )
-            ? WILL_REMAIN_THE_SAME
-            : WILL_DIE
     } else {
-        return isWithinRange(
-            numberOfAliveNeighbors,
-            minForCreation,
-            MaxForCreation
+        return (
+            isWithinRange(
+                numberOfAliveNeighbors,
+                minForRevival,
+                MaxForCreation
+            ) && WILL_REVIVE
         )
-            ? WILL_APPEAR
-            : WILL_REMAIN_THE_SAME
     }
 }
 
@@ -91,20 +90,20 @@ function CellView({
     const dispatch = useDispatch()
     const { isAlive } = useSelector((state) => state.board[rowI][columnI])
 
-    const survivingConditions = useSelector(selectorOfSurvivingConditions)
-    const creationConditions = useSelector(selectorOfCreationConditions)
+    const survivalConditions = useSelector(selectorOfSurvivalConditions)
+    const revivalConditions = useSelector(selectorOfRevivalConditions)
     const { numberOfAliveNeighbors } = useSelector(
         (store) => store.board[rowI][columnI]
     )
 
     const handleMouseDown = () => {
-        dispatch((isAlive ? killCell : createCell)([rowI, columnI]))
+        dispatch((isAlive ? killCell : reviveCell)([rowI, columnI]))
     }
 
     const handleMouseOver = () => {
         !isAlive &&
             isMouseDownRef.current &&
-            dispatch(createCell([rowI, columnI]))
+            dispatch(reviveCell([rowI, columnI]))
     }
 
     return (
@@ -119,13 +118,23 @@ function CellView({
                 computeNextLifeStatus(
                     isAlive,
                     numberOfAliveNeighbors,
-                    survivingConditions,
-                    creationConditions
+                    survivalConditions,
+                    revivalConditions
                 )
             }>
             {shouldShowNumberOfAliveNeighbors && numberOfAliveNeighbors}
         </CellContainer>
     )
+}
+
+CellView.propTypes = {
+    rowI: PropTypes.number,
+    columnI: PropTypes.number,
+    isMouseDownRef: PropTypes.shape({
+        current: PropTypes.bool
+    }),
+    shouldShowPrediction: PropTypes.bool,
+    shouldShowNumberOfAliveNeighbors: PropTypes.bool
 }
 
 const areEqual = (

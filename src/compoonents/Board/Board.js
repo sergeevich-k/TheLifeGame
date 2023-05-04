@@ -7,6 +7,7 @@ import {
     HORIZONTAL_CELLS_COUNT,
     VERTICAL_CELLS_COUNT
 } from '../../constants'
+import PropTypes from 'prop-types'
 
 export function Board({
     shouldShowPrediction,
@@ -59,4 +60,9 @@ export function Board({
             }, [])}
         </div>
     )
+}
+
+Board.propTypes = {
+    shouldShowPrediction: PropTypes.bool,
+    shouldShowNumberOfAliveNeighbors: PropTypes.bool
 }

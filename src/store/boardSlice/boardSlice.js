@@ -18,7 +18,7 @@ export const boardSlice = createSlice({
     name: 'board',
     initialState,
     reducers: {
-        createCell(board, { payload: [rowI, columnI] }) {
+        reviveCell(board, { payload: [rowI, columnI] }) {
             board[rowI][columnI].isAlive = true
 
             changeNumberOfAliveNeighborsInSurroundingCells(
@@ -47,7 +47,7 @@ export const boardSlice = createSlice({
     }
 })
 
-export const { createCell, clearBoard, setNewBoard, killCell } =
+export const { reviveCell, clearBoard, setNewBoard, killCell } =
     boardSlice.actions
 
 export default boardSlice.reducer

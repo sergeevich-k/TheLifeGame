@@ -5,79 +5,63 @@ import {
     getRowBelowIndex
 } from './createNewGeneration'
 
-const changeInCellAbove = (rowI, columnI, board, changeFn) => {
-    const rowAboveI = getRowAboveIndex(rowI)
-    const { numberOfAliveNeighbors } = board[rowAboveI][columnI]
+const changeInCell = (rowI, columnI, board, changeFn) => {
+    const { numberOfAliveNeighbors } = board[rowI][columnI]
 
-    board[rowAboveI][columnI].numberOfAliveNeighbors = changeFn(
+    board[rowI][columnI].numberOfAliveNeighbors = changeFn(
         numberOfAliveNeighbors
     )
 }
+
+const changeInCellAbove = (rowI, columnI, board, changeFn) => {
+    const rowAboveI = getRowAboveIndex(rowI)
+    changeInCell(rowAboveI, columnI, board, changeFn)
+}
+
 const changeInCellBelow = (rowI, columnI, board, changeFn) => {
     const rowBelowI = getRowBelowIndex(rowI)
 
-    const { numberOfAliveNeighbors } = board[rowBelowI][columnI]
-    board[rowBelowI][columnI].numberOfAliveNeighbors = changeFn(
-        numberOfAliveNeighbors
-    )
+    changeInCell(rowBelowI, columnI, board, changeFn)
 }
 
 const changeInCellToTheLeft = (rowI, columnI, board, changeFn) => {
     const previousColumnI = getPreviousColumnIndex(columnI)
 
-    const { numberOfAliveNeighbors } = board[rowI][previousColumnI]
-    board[rowI][previousColumnI].numberOfAliveNeighbors = changeFn(
-        numberOfAliveNeighbors
-    )
+    changeInCell(rowI, previousColumnI, board, changeFn)
 }
 
 const changeInCellToTheRight = (rowI, columnI, board, changeFn) => {
     const nextColumnI = getNextColumnIndex(columnI)
 
-    const { numberOfAliveNeighbors } = board[rowI][nextColumnI]
-    board[rowI][nextColumnI].numberOfAliveNeighbors = changeFn(
-        numberOfAliveNeighbors
-    )
+    changeInCell(rowI, nextColumnI, board, changeFn)
 }
 
 const changeInCellToTheTopLeft = (rowI, columnI, board, changeFn) => {
     const previousColumnI = getPreviousColumnIndex(columnI)
     const rowAboveI = getRowAboveIndex(rowI)
 
-    const { numberOfAliveNeighbors } = board[rowAboveI][previousColumnI]
-    board[rowAboveI][previousColumnI].numberOfAliveNeighbors = changeFn(
-        numberOfAliveNeighbors
-    )
+    changeInCell(rowAboveI, previousColumnI, board, changeFn)
 }
 
 const changeInCellToTheBottomLeft = (rowI, columnI, board, changeFn) => {
     const previousColumnI = getPreviousColumnIndex(columnI)
-    const belowRowI = getRowBelowIndex(rowI)
+    const rowBelowI = getRowBelowIndex(rowI)
 
-    const { numberOfAliveNeighbors } = board[belowRowI][previousColumnI]
-    board[belowRowI][previousColumnI].numberOfAliveNeighbors = changeFn(
-        numberOfAliveNeighbors
-    )
+    changeInCell(rowBelowI, previousColumnI, board, changeFn)
 }
 
 const changeInCellToTheTopRight = (rowI, columnI, board, changeFn) => {
     const nextColumnI = getNextColumnIndex(columnI)
     const rowAboveI = getRowAboveIndex(rowI)
 
-    const { numberOfAliveNeighbors } = board[rowAboveI][nextColumnI]
-    board[rowAboveI][nextColumnI].numberOfAliveNeighbors = changeFn(
-        numberOfAliveNeighbors
-    )
+    changeInCell(rowAboveI, nextColumnI, board, changeFn)
 }
 
 const changeInCellToTheBottomRight = (rowI, columnI, board, changeFn) => {
     const nextColumnI = getNextColumnIndex(columnI)
     const rowBelowI = getRowBelowIndex(rowI)
 
-    const { numberOfAliveNeighbors } = board[rowBelowI][nextColumnI]
-    board[rowBelowI][nextColumnI].numberOfAliveNeighbors = changeFn(
-        numberOfAliveNeighbors
-    )
+    changeInCell(rowBelowI, nextColumnI, board, changeFn)
 }
 
 const changeNumberOfAliveNeighborsInSurroundingCells = (

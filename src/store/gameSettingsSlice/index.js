@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
-import survivingConditionsSlice from '../ConditionsSlice/survivingConditionsSlice'
-import creationConditionsSlice from '../ConditionsSlice/creationConditionsSlice'
+import survivalConditionsSlice from '../ConditionsSlice/survivalConditionsSlice'
+import revivalConditionsSlice from '../ConditionsSlice/revivalConditionsSlice'
 import shouldShowNumberOfAliveNeighborsSlice from './shouldShowSlice'
 
 export default combineReducers({
-    [survivingConditionsSlice.name]: survivingConditionsSlice.reducer,
-    [creationConditionsSlice.name]: creationConditionsSlice.reducer,
+    [survivalConditionsSlice.name]: survivalConditionsSlice.reducer,
+    [revivalConditionsSlice.name]: revivalConditionsSlice.reducer,
     [shouldShowNumberOfAliveNeighborsSlice.name]:
         shouldShowNumberOfAliveNeighborsSlice.reducer
 })

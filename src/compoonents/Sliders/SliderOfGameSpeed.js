@@ -1,5 +1,6 @@
 import { Slider } from '@mui/material'
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 export function SliderOfGameSpeed({ handleSpeedChange }) {
     const [speed, setSpeed] = useState(1)
@@ -25,4 +26,8 @@ export function SliderOfGameSpeed({ handleSpeedChange }) {
             valueLabelFormat={(value) => `x ${value}`}
         />
     )
+}
+
+SliderOfGameSpeed.propTypes = {
+    handleSpeedChange: PropTypes.func
 }

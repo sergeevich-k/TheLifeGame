@@ -3,22 +3,22 @@ import { HORIZONTAL_CELLS_COUNT, VERTICAL_CELLS_COUNT } from '../../constants'
 
 export const getRowAboveIndex = (rowI) => {
     let rowAboveI = rowI - 1
-    if (rowAboveI < 0) rowAboveI = HORIZONTAL_CELLS_COUNT - 1
+    if (rowAboveI < 0) rowAboveI = VERTICAL_CELLS_COUNT - 1
     return rowAboveI
 }
 export const getRowBelowIndex = (rowI) => {
     let rowBelowI = rowI + 1
-    if (rowBelowI > HORIZONTAL_CELLS_COUNT - 1) rowBelowI = 0
+    if (rowBelowI > VERTICAL_CELLS_COUNT - 1) rowBelowI = 0
     return rowBelowI
 }
 export const getNextColumnIndex = (columnI) => {
     let nextColumnI = columnI + 1
-    if (nextColumnI > VERTICAL_CELLS_COUNT - 1) nextColumnI = 0
+    if (nextColumnI > HORIZONTAL_CELLS_COUNT - 1) nextColumnI = 0
     return nextColumnI
 }
 export const getPreviousColumnIndex = (columnI) => {
     let previousColumnI = columnI - 1
-    if (previousColumnI < 0) previousColumnI = VERTICAL_CELLS_COUNT - 1
+    if (previousColumnI < 0) previousColumnI = HORIZONTAL_CELLS_COUNT - 1
     return previousColumnI
 }
 
@@ -82,8 +82,8 @@ const computeNextCell = (
     rowI,
     columnI,
     board,
-    [minForSurviving, maxForSurviving],
-    [minForCreation, maxForCreation]
+    [minForSurvival, maxForSurvival],
+    [minForRevival, maxForRevival]
 ) => {
     const { isAlive } = board[rowI][columnI]
     const numberOfAliveNeighbors = countNumberOfAliveNeighbors(
@@ -97,14 +97,14 @@ const computeNextCell = (
     if (isAlive) {
         newCell.isAlive = isWithinRange(
             numberOfAliveNeighbors,
-            minForSurviving,
-            maxForSurviving
+            minForSurvival,
+            maxForSurvival
         )
     } else {
         newCell.isAlive = isWithinRange(
             numberOfAliveNeighbors,
-            minForCreation,
-            maxForCreation
+            minForRevival,
+            maxForRevival
         )
     }
 
@@ -113,8 +113,8 @@ const computeNextCell = (
 
 export const createNewGeneration = () => (dispatch, getState) => {
     const board = getState().board
-    const survivingConditions = getState().gameSettings.survivingConditions
-    const creationConditions = getState().gameSettings.creationConditions
+    const survivalConditions = getState().gameSettings.survivalConditions
+    const revivalConditions = getState().gameSettings.revivalConditions
 
     let newBoard = board.map((row, rowI) => {
         return row.map((cell, columnI) => {
@@ -122,8 +122,8 @@ export const createNewGeneration = () => (dispatch, getState) => {
                 rowI,
                 columnI,
                 board,
-                survivingConditions,
-                creationConditions
+                survivalConditions,
+                revivalConditions
             )
         })
     })

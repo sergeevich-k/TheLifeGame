@@ -3,19 +3,20 @@ import { useDispatch } from 'react-redux'
 
 import { SliderOfCondition } from '../Sliders/'
 import {
-    selectorOfSurvivingConditions,
-    setCellsSurvivingConditions
-} from '../../store/ConditionsSlice/survivingConditionsSlice'
+    selectorOfSurvivalConditions,
+    setCellsSurvivalConditions
+} from '../../store/ConditionsSlice/survivalConditionsSlice'
 import {
-    selectorOfCreationConditions,
-    setCellsCreationConditions
-} from '../../store/ConditionsSlice/creationConditionsSlice'
+    selectorOfRevivalConditions,
+    setCellsRevivalConditions
+} from '../../store/ConditionsSlice/revivalConditionsSlice'
 
 import { createNewGeneration } from '../../store/boardSlice/createNewGeneration'
 import { CheckboxOfShouldShow } from '../CheckBox'
 import { Player } from '../Player'
 import { Button, Stack } from '@mui/material'
 import { EMPHASIZE_ALL_OUTSIDE, EMPHASIZE_CHOSEN_RANGE } from '../Sliders/style'
+import PropTypes from 'prop-types'
 
 export function ControlPanel({
     toggleShouldShowPrediction,
@@ -40,15 +41,15 @@ export function ControlPanel({
                 }
             `}>
             <SliderOfCondition
-                selector={selectorOfSurvivingConditions}
-                actionOnChange={setCellsSurvivingConditions}
+                selector={selectorOfSurvivalConditions}
+                actionOnChange={setCellsSurvivalConditions}
                 label={'Диапазон Выживания:'}
                 shouldShowPrediction={shouldShowPrediction}
                 emphasizedPart={EMPHASIZE_ALL_OUTSIDE}
             />
             <SliderOfCondition
-                selector={selectorOfCreationConditions}
-                actionOnChange={setCellsCreationConditions}
+                selector={selectorOfRevivalConditions}
+                actionOnChange={setCellsRevivalConditions}
                 label={'Диапазон Появления:'}
                 shouldShowPrediction={shouldShowPrediction}
                 emphasizedPart={EMPHASIZE_CHOSEN_RANGE}
@@ -82,4 +83,11 @@ export function ControlPanel({
             <Player />
         </div>
     )
+}
+
+ControlPanel.propTypes = {
+    toggleShouldShowPrediction: PropTypes.func,
+    shouldShowPrediction: PropTypes.bool,
+    toggleShouldShowNumberOfAliveNeighbors: PropTypes.func,
+    shouldShowNumberOfAliveNeighbors: PropTypes.bool
 }

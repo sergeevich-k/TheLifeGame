@@ -5,10 +5,11 @@ import styled, { css } from 'styled-components'
 import { EMPHASIZE_ALL_OUTSIDE, EMPHASIZE_CHOSEN_RANGE } from './style'
 import {
     aliveCellsColor,
-    appearingCellsColor,
+    revivingCellsColor,
     deadCellsColor,
     dyingCellsColor
 } from '../TheLifeGame/style'
+import PropTypes from 'prop-types'
 
 const marks = []
 
@@ -40,12 +41,12 @@ const EmphasizingSlider = styled(Slider)`
             case EMPHASIZE_CHOSEN_RANGE:
                 return css`
                     & .MuiSlider-track {
-                        background-color: ${appearingCellsColor};
+                        background-color: ${revivingCellsColor};
                         height: 5px;
                     }
 
                     & .MuiSlider-thumb {
-                        background-color: ${appearingCellsColor};
+                        background-color: ${revivingCellsColor};
                     }
 
                     & .MuiSlider-rail {
@@ -79,10 +80,7 @@ export function SliderOfCondition({
     return (
         <div
             css={css`
-                margin: 2px 0;
-                /*     border : 1px solid palevioletred;*/
-                border-radius: 3px;
-                padding: 5px 10px;
+                margin: 7px 10px;
             `}>
             {label}
             <EmphasizingSlider
@@ -98,4 +96,12 @@ export function SliderOfCondition({
             />
         </div>
     )
+}
+
+SliderOfCondition.propTypes = {
+    selector: PropTypes.func,
+    actionOnChange: PropTypes.func,
+    label: PropTypes.string,
+    emphasizedPart: PropTypes.string,
+    shouldShowPrediction: PropTypes.bool
 }
