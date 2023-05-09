@@ -1,4 +1,4 @@
-import { CELLS_HEIGHT_PX, CELLS_WIDTH_PX } from '../../constants'
+import { CELLS_SIDE_LENGTH_PX } from '../../constants'
 import styled, { css } from 'styled-components'
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -12,11 +12,21 @@ import { WILL_REVIVE, WILL_DIE } from './style'
 import {
     aliveCellsColor,
     revivingCellsColor,
-    deadCellsColor,
-    dyingCellsColor
+    dyingCellsColor,
+    fontSecondColor,
+    fontGreyerColor,
+    fontColor,
+    fontLighterColor
 } from '../TheLifeGame/style'
 
 const CELL_BORDER_WIDTH_PX = 1
+const CELLS_CONTENT_SIDE_LENGTH_PX =
+    CELLS_SIDE_LENGTH_PX - 2 * CELL_BORDER_WIDTH_PX
+
+const getThickShadow = (color) => `-2px 0 3px ${color}, -2px 0 3px ${color}, 
+                            0 2px 3px ${color}, 0 2px 3px ${color}, 
+                            2px 0 3px ${color},2px 0 3px ${color},
+                             0 -2px 3px ${color}, 0 -2px 3px ${color};`
 
 const CellContainer = styled.div.attrs(({ top, left }) => ({
     style: {
@@ -25,31 +35,51 @@ const CellContainer = styled.div.attrs(({ top, left }) => ({
     }
 }))`
     position: absolute;
-    width: ${CELLS_WIDTH_PX}px;
-    height: ${CELLS_HEIGHT_PX}px;
+    width: ${CELLS_SIDE_LENGTH_PX}px;
+    height: ${CELLS_SIDE_LENGTH_PX}px;
     border: ${CELL_BORDER_WIDTH_PX}px solid darkcyan;
     box-sizing: border-box;
-    text-align: center;
 
-    font-size: ${CELLS_HEIGHT_PX - 2 * CELL_BORDER_WIDTH_PX}px;
+    background: ${({ isAlive }) => isAlive && aliveCellsColor};
+    color: ${({ isAlive }) => (isAlive ? 'black' : fontGreyerColor)};
 
     ${({ nextLifeStatus }) => {
         switch (nextLifeStatus) {
             case WILL_DIE:
                 return css`
-                    background: ${dyingCellsColor};
-                    color: white;
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        display: block;
+
+                        height: ${CELLS_CONTENT_SIDE_LENGTH_PX / 2}px;
+                        width: ${CELLS_CONTENT_SIDE_LENGTH_PX / 2}px;
+                        top: ${CELLS_CONTENT_SIDE_LENGTH_PX / 4}px;
+                        left: ${CELLS_CONTENT_SIDE_LENGTH_PX / 4}px;
+
+                        background: ${dyingCellsColor};
+                    }
+
+                    color: ${fontLighterColor};
+                    text-shadow: ${getThickShadow(dyingCellsColor)};
                 `
             case WILL_REVIVE:
                 return css`
-                    background: ${revivingCellsColor};
-                    color: black;
-                `
-            default:
-                return css`
-                    background: ${({ isAlive }) =>
-                        isAlive ? aliveCellsColor : deadCellsColor};
-                    color: ${({ isAlive }) => isAlive && 'black'};
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        display: block;
+
+                        height: ${CELLS_CONTENT_SIDE_LENGTH_PX / 3}px;
+                        width: ${CELLS_CONTENT_SIDE_LENGTH_PX / 3}px;
+                        top: ${CELLS_CONTENT_SIDE_LENGTH_PX / 3}px;
+                        left: ${CELLS_CONTENT_SIDE_LENGTH_PX / 3}px;
+
+                        background: ${revivingCellsColor};
+                    }
+
+                    color: ${fontLighterColor};
+                    text-shadow: ${getThickShadow('green')};
                 `
         }
     }}
@@ -108,8 +138,8 @@ function CellView({
 
     return (
         <CellContainer
-            top={rowI * CELLS_HEIGHT_PX}
-            left={columnI * CELLS_WIDTH_PX}
+            top={rowI * CELLS_SIDE_LENGTH_PX}
+            left={columnI * CELLS_SIDE_LENGTH_PX}
             isAlive={isAlive}
             onMouseDown={handleMouseDown}
             onMouseOver={handleMouseOver}
@@ -122,7 +152,19 @@ function CellView({
                     revivalConditions
                 )
             }>
-            {shouldShowNumberOfAliveNeighbors && numberOfAliveNeighbors}
+            {shouldShowNumberOfAliveNeighbors && (
+                <div
+                    css={`
+                        position: absolute;
+                        z-index: 1;
+                        font-size: ${CELLS_CONTENT_SIDE_LENGTH_PX}px;
+                        line-height: 1;
+                        width: 100%;
+                        text-align: center;
+                    `}>
+                    {numberOfAliveNeighbors}
+                </div>
+            )}
         </CellContainer>
     )
 }

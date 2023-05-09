@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createNewGeneration } from '../../store/boardSlice/createNewGeneration'
 import { clearBoard } from '../../store/boardSlice/boardSlice'
+import {
+    fontFirstColor,
+    fontGreyerColor,
+    fontSecondColor,
+    fontColor
+} from './style'
 
 const useKeyboardBinding = () => {
     const dispatch = useDispatch()
@@ -14,7 +20,7 @@ const useKeyboardBinding = () => {
     }
     const onCKeyDown = (event) => {
         const pressedKey = event.key.toLowerCase()
-        if (pressedKey === 'с' || pressedKey === 'c') dispatch(clearBoard())
+        if (pressedKey === 'v' || pressedKey === 'м') dispatch(clearBoard())
     }
 
     useEffect(() => {
@@ -49,8 +55,8 @@ export function TheLifeGame() {
                  {
                     background: #17487c;
                     border-radius: 3px;
-                    border: 2px solid palevioletred;
-                    color: rgb(227, 165, 165);
+                    border: 2px solid ${fontGreyerColor};
+                    color: ${fontColor};
                     margin: 0 1em;
                     padding: 0.25em 1em;
                     display: flex;

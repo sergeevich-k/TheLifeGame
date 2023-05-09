@@ -2,8 +2,7 @@ import { useSelector } from 'react-redux'
 import { Cell } from '../Cells'
 import { useRef } from 'react'
 import {
-    CELLS_HEIGHT_PX,
-    CELLS_WIDTH_PX,
+    CELLS_SIDE_LENGTH_PX,
     HORIZONTAL_CELLS_COUNT,
     VERTICAL_CELLS_COUNT
 } from '../../constants'
@@ -34,8 +33,8 @@ export function Board({
                     border: inherit;
 
                     margin: 1em;
-                    width: ${HORIZONTAL_CELLS_COUNT * CELLS_WIDTH_PX}px;
-                    height: ${VERTICAL_CELLS_COUNT * CELLS_HEIGHT_PX}px;
+                    width: ${HORIZONTAL_CELLS_COUNT * CELLS_SIDE_LENGTH_PX}px;
+                    height: ${VERTICAL_CELLS_COUNT * CELLS_SIDE_LENGTH_PX}px;
                     flex-grow: 3;
                 }
             `}

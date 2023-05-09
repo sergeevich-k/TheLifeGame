@@ -17,6 +17,7 @@ import { Player } from '../Player'
 import { Button, Stack } from '@mui/material'
 import { EMPHASIZE_ALL_OUTSIDE, EMPHASIZE_CHOSEN_RANGE } from '../Sliders/style'
 import PropTypes from 'prop-types'
+import { fontColor } from '../TheLifeGame/style'
 
 export function ControlPanel({
     toggleShouldShowPrediction,
@@ -68,12 +69,14 @@ export function ControlPanel({
             />
             <Stack spacing={1} direction="row">
                 <Button
+                    sx={{ color: 'rgba(225,222,222,0.85)' }}
                     variant="contained"
                     disableRipple={true}
                     onClick={() => dispatch(clearBoard())}>
                     Очистить доску
                 </Button>
                 <Button
+                    sx={{ color: 'rgba(225,222,222,0.85)' }}
                     variant="contained"
                     disableRipple={true}
                     onClick={() => dispatch(createNewGeneration())}>
