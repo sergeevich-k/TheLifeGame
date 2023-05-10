@@ -18,8 +18,8 @@ for (let i = 0; i <= 8; i++) {
 }
 
 const EmphasizingSlider = styled(Slider)`
-    ${({ $emphasizedPart, $shouldShowPrediction }) => {
-        if (!$shouldShowPrediction) return
+    ${({ $emphasizedPart, $shouldShowNextLifeStatus }) => {
+        if (!$shouldShowNextLifeStatus) return
         switch ($emphasizedPart) {
             case EMPHASIZE_ALL_OUTSIDE:
                 return css`
@@ -64,7 +64,7 @@ export function SliderOfCondition({
     actionOnChange,
     label,
     emphasizedPart,
-    shouldShowPrediction
+    shouldShowNextLifeStatus
 }) {
     const dispatch = useDispatch()
 
@@ -92,7 +92,7 @@ export function SliderOfCondition({
                 min={0}
                 max={8}
                 $emphasizedPart={emphasizedPart}
-                $shouldShowPrediction={shouldShowPrediction}
+                $shouldShowNextLifeStatus={shouldShowNextLifeStatus}
             />
         </div>
     )
@@ -103,5 +103,5 @@ SliderOfCondition.propTypes = {
     actionOnChange: PropTypes.func,
     label: PropTypes.string,
     emphasizedPart: PropTypes.string,
-    shouldShowPrediction: PropTypes.bool
+    shouldShowNextLifeStatus: PropTypes.bool
 }

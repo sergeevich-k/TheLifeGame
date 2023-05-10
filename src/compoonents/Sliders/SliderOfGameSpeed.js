@@ -1,9 +1,10 @@
 import { Slider } from '@mui/material'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { initialSpeedRatio } from '../Player'
 
 export function SliderOfGameSpeed({ handleSpeedChange }) {
-    const [speed, setSpeed] = useState(1)
+    const [speed, setSpeed] = useState(initialSpeedRatio)
 
     const handleChange = (e, newSpeed) => {
         if (speed !== newSpeed) {

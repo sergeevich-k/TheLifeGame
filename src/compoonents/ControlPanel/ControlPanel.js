@@ -17,11 +17,10 @@ import { Player } from '../Player'
 import { Button, Stack } from '@mui/material'
 import { EMPHASIZE_ALL_OUTSIDE, EMPHASIZE_CHOSEN_RANGE } from '../Sliders/style'
 import PropTypes from 'prop-types'
-import { fontColor } from '../TheLifeGame/style'
 
 export function ControlPanel({
-    toggleShouldShowPrediction,
-    shouldShowPrediction,
+    toggleShouldShowNextLifeStatus,
+    shouldShowNextLifeStatus,
     toggleShouldShowNumberOfAliveNeighbors,
     shouldShowNumberOfAliveNeighbors
 }) {
@@ -45,14 +44,14 @@ export function ControlPanel({
                 selector={selectorOfSurvivalConditions}
                 actionOnChange={setCellsSurvivalConditions}
                 label={'Диапазон Выживания:'}
-                shouldShowPrediction={shouldShowPrediction}
+                shouldShowNextLifeStatus={shouldShowNextLifeStatus}
                 emphasizedPart={EMPHASIZE_ALL_OUTSIDE}
             />
             <SliderOfCondition
                 selector={selectorOfRevivalConditions}
                 actionOnChange={setCellsRevivalConditions}
                 label={'Диапазон Появления:'}
-                shouldShowPrediction={shouldShowPrediction}
+                shouldShowNextLifeStatus={shouldShowNextLifeStatus}
                 emphasizedPart={EMPHASIZE_CHOSEN_RANGE}
             />
 
@@ -63,9 +62,9 @@ export function ControlPanel({
             />
 
             <CheckboxOfShouldShow
-                checked={shouldShowPrediction}
-                onChange={toggleShouldShowPrediction}
-                label="Показывать следующее поколение"
+                checked={shouldShowNextLifeStatus}
+                onChange={toggleShouldShowNextLifeStatus}
+                label="Показывать следующее состояние "
             />
             <Stack spacing={1} direction="row">
                 <Button
@@ -89,8 +88,8 @@ export function ControlPanel({
 }
 
 ControlPanel.propTypes = {
-    toggleShouldShowPrediction: PropTypes.func,
-    shouldShowPrediction: PropTypes.bool,
+    toggleShouldShowNextLifeStatus: PropTypes.func,
+    shouldShowNextLifeStatus: PropTypes.bool,
     toggleShouldShowNumberOfAliveNeighbors: PropTypes.func,
     shouldShowNumberOfAliveNeighbors: PropTypes.bool
 }

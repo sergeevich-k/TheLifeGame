@@ -4,12 +4,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createNewGeneration } from '../../store/boardSlice/createNewGeneration'
 import { clearBoard } from '../../store/boardSlice/boardSlice'
-import {
-    fontFirstColor,
-    fontGreyerColor,
-    fontSecondColor,
-    fontColor
-} from './style'
+import { fontGreyerColor, fontColor } from './style'
 
 const useKeyboardBinding = () => {
     const dispatch = useDispatch()
@@ -36,14 +31,14 @@ const useKeyboardBinding = () => {
 export function TheLifeGame() {
     useKeyboardBinding()
 
-    const [shouldShowPrediction, setShouldShowPrediction] = useState(false)
+    const [shouldShowNextLifeStatus, setShouldShowPrediction] = useState(false)
     const [
         shouldShowNumberOfAliveNeighbors,
         setShouldShowNumberOfAliveNeighbors
     ] = useState(false)
 
-    const toggleShouldShowPrediction = () => {
-        setShouldShowPrediction(!shouldShowPrediction)
+    const toggleShouldShowNextLifeStatus = () => {
+        setShouldShowPrediction(!shouldShowNextLifeStatus)
     }
     const toggleShouldShowNumberOfAliveNeighbors = () => {
         setShouldShowNumberOfAliveNeighbors(!shouldShowNumberOfAliveNeighbors)
@@ -65,8 +60,8 @@ export function TheLifeGame() {
                 }
             `}>
             <ControlPanel
-                toggleShouldShowPrediction={toggleShouldShowPrediction}
-                shouldShowPrediction={shouldShowPrediction}
+                toggleShouldShowNextLifeStatus={toggleShouldShowNextLifeStatus}
+                shouldShowNextLifeStatus={shouldShowNextLifeStatus}
                 toggleShouldShowNumberOfAliveNeighbors={
                     toggleShouldShowNumberOfAliveNeighbors
                 }
@@ -75,7 +70,7 @@ export function TheLifeGame() {
                 }
             />
             <Board
-                shouldShowPrediction={shouldShowPrediction}
+                shouldShowNextLifeStatus={shouldShowNextLifeStatus}
                 shouldShowNumberOfAliveNeighbors={
                     shouldShowNumberOfAliveNeighbors
                 }

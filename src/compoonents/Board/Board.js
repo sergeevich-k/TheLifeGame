@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { Cell } from '../Cells'
+import { Cell } from '../Cell'
 import { useRef } from 'react'
 import {
     CELLS_SIDE_LENGTH_PX,
@@ -9,7 +9,7 @@ import {
 import PropTypes from 'prop-types'
 
 export function Board({
-    shouldShowPrediction,
+    shouldShowNextLifeStatus,
     shouldShowNumberOfAliveNeighbors
 }) {
     let isMouseDownRef = useRef(false)
@@ -48,7 +48,7 @@ export function Board({
                             columnI={columnI}
                             key={`${rowI}+${columnI} `}
                             isMouseDownRef={isMouseDownRef}
-                            shouldShowPrediction={shouldShowPrediction}
+                            shouldShowNextLifeStatus={shouldShowNextLifeStatus}
                             shouldShowNumberOfAliveNeighbors={
                                 shouldShowNumberOfAliveNeighbors
                             }
@@ -62,6 +62,6 @@ export function Board({
 }
 
 Board.propTypes = {
-    shouldShowPrediction: PropTypes.bool,
+    shouldShowNextLifeStatus: PropTypes.bool,
     shouldShowNumberOfAliveNeighbors: PropTypes.bool
 }

@@ -7,14 +7,15 @@ import { createNewGeneration } from '../../store/boardSlice/createNewGeneration'
 import { useRef, useState } from 'react'
 import { SliderOfGameSpeed } from '../Sliders/SliderOfGameSpeed'
 
+export const initialSpeedRatio = 2.5
+
 export const Player = () => {
     const dispatch = useDispatch()
     const intervalIdRef = useRef(0)
-    const speedRatioRef = useRef(1)
+    const speedRatioRef = useRef(initialSpeedRatio)
     const [doesGameGo, setDoesGameGo] = useState(false)
 
     const startTheGame = () => {
-        if (intervalIdRef.current !== 0) return
         intervalIdRef.current = setInterval(
             () => dispatch(createNewGeneration()),
             1000 / speedRatioRef.current
