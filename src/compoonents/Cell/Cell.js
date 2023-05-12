@@ -56,29 +56,21 @@ const computeNextLifeStatus = (
 }
 
 function CellView({
+    isAlive,
+    numberOfAliveNeighbors,
     rowI,
     columnI,
-    isMouseDownRef,
+    handleMouseOver,
     shouldShowNextLifeStatus,
     shouldShowNumberOfAliveNeighbors
 }) {
     const dispatch = useDispatch()
-    const { isAlive } = useSelector((state) => state.board[rowI][columnI])
 
     const survivalConditions = useSelector(selectorOfSurvivalConditions)
     const revivalConditions = useSelector(selectorOfRevivalConditions)
-    const { numberOfAliveNeighbors } = useSelector(
-        (store) => store.board[rowI][columnI]
-    )
 
     const handleMouseDown = () => {
         dispatch((isAlive ? killCell : reviveCell)([rowI, columnI]))
-    }
-
-    const handleMouseOver = () => {
-        !isAlive &&
-            isMouseDownRef.current &&
-            dispatch(reviveCell([rowI, columnI]))
     }
 
     const nextLifeStatus =
@@ -113,23 +105,31 @@ function CellView({
 }
 
 CellView.propTypes = {
+    isAlive: PropTypes.bool,
+    numberOfAliveNeighbors: PropTypes.number,
     rowI: PropTypes.number,
     columnI: PropTypes.number,
-    isMouseDownRef: PropTypes.shape({
-        current: PropTypes.bool
-    }),
     shouldShowNextLifeStatus: PropTypes.bool,
     shouldShowNumberOfAliveNeighbors: PropTypes.bool
 }
 
 const areEqual = (
-    { shouldShowNextLifeStatus, shouldShowNumberOfAliveNeighbors },
     {
+        shouldShowNextLifeStatus,
+        shouldShowNumberOfAliveNeighbors,
+        isAlive,
+        numberOfAliveNeighbors
+    },
+    {
+        isAlive: newIsAlive,
+        numberOfAliveNeighbors: newNumberOfAliveNeighbors,
         shouldShowNextLifeStatus: newShouldShowPrediction,
         shouldShowNumberOfAliveNeighbors: newShouldShowNumberOfAliveNeighbors
     }
 ) => {
     return (
+        isAlive === newIsAlive &&
+        numberOfAliveNeighbors === newNumberOfAliveNeighbors &&
         shouldShowNextLifeStatus === newShouldShowPrediction &&
         shouldShowNumberOfAliveNeighbors === newShouldShowNumberOfAliveNeighbors
     )
